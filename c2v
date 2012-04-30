@@ -1,0 +1,153 @@
+#! /usr/bin/python
+
+from convert2vtk import *
+import sys
+import os
+
+# Initialize a dictionary with default parameters for all of the input values
+init_vars = {}
+init_vars['input_filetype'] = "netcdf"
+init_vars['input_filename'] = 'None'
+init_vars['output_directory'] = "converted_files"
+init_vars['output_filename'] = 'None'
+init_vars['variables'] = 'None'
+init_vars['ibegin'] = 'None'
+init_vars['iend'] = 'None'
+init_vars['jbegin'] = 'None'
+init_vars['jend'] = 'None'
+init_vars['kbegin'] = 'None'
+init_vars['kend'] = 'None'
+init_vars['time_begin'] = 0
+init_vars['time_step'] = 1
+init_vars['vector'] = False
+init_vars['filename_u'] = 'None'
+init_vars['filename_v'] = 'None'
+init_vars['bathymetry'] = 'None'
+
+# Here we parse through the parameter file and command line arguments to extract the input information
+if len(sys.argv) < 3 or (len(sys.argv) > 3 and sys.argv[1] != "--vector" and sys.argv[1] != "-v"):
+    sys.exit("\nMust pass a data file to be converted, and a parameter" + \
+            "file.\ne.g.\n\tc2v hycom_experiment6.nc experiment6.param\n"+ \
+            "\nOr if dealing with vectors, use the --vector or -v flag\n"+ \
+            "e.g.\n\tc2v --vector hycom_winds_u.nc hycom_winds_v.nc winds.param\n"+ \
+            "\tc2v -v hycom_winds_u.nc hycom_winds_v.nc winds.param" )
+
+elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
+    if os.path.exists(sys.argv[2]):
+        init_vars['filename_u'] = sys.argv[2]
+    else:
+        sys.exit("ERROR: The data file\n\n\t %s \n\ndoes not exist!"+ \
+                "\nAre you using the full path?" % sys.argv[2])
+    if os.path.exists(sys.argv[3]):
+        init_vars['filename_v'] = sys.argv[3]
+    else:
+        sys.exit("ERROR: The data file\n\n\t %s \n\ndoes not exist!"+ \
+                "\nAre you using the full path?" % sys.argv[3])
+    if os.path.exists(sys.argv[4]):
+        parameter = sys.argv[4]
+    else:
+        sys.exit("ERROR: The parameter file\n\n\t %s \n\ndoes not exist!"+ \
+                "\nAre you using the full path?" % sys.argv[4])
+    init_vars['vector'] = True
+    with open(parameter) as fn:
+        lines = fn.readlines()
+        for line in lines:
+            words = line.split()
+            if len(words) == 0:
+                continue
+            elif words[0] == "input_filetype":
+                init_vars['input_filetype'] = words[2]
+            elif words[0] == "output_directory":
+                init_vars['output_directory'] = words[2]
+            elif words[0] == "output_filename":
+                num = 0
+                if os.path.exists( init_vars['output_directory']+'/'+words[2]+"%02d.vtk"%num ):
+                    dirs = os.listdir( init_vars['output_directory'] )
+                    for dir in dirs:                         
+                        if dir[:len(words[2])] == words[2]:
+                            num += 1                                                
+                init_vars['output_filename'] = words[2] + "%02d" % num
+            elif words[0] == "variables":
+                init_vars['variables'] = words[2:]
+            elif words[0] == "ibegin":
+                init_vars['ibegin'] = words[2]
+            elif words[0] == "iend":
+                init_vars['iend'] = words[2]
+            elif words[0] == "jbegin":
+                init_vars['jbegin'] = words[2]
+            elif words[0] == "jend":
+                init_vars['jend'] = words[2]
+            elif words[0] == "kbegin":
+                init_vars['kbegin'] = words[2]
+            elif words[0] == "kend":
+                init_vars['kend'] = words[2]
+            elif words[0] == "time_begin":
+                init_vars['time_begin'] = words[2]
+            elif words[0] == "time_step":
+                init_vars['time_step'] = words[2]
+            elif words[0] == "bathymetry":
+                init_vars['bathymetry'] = words[2]
+    if init_vars['variables'] == 'None':
+        sys.exit("\nERROR: The parameter file\n\t '%s' \nmust have a line" % parameter + \
+                "initializing the keywords 'variables' to a space separated list"+ \
+                " of the variables to be converted")
+elif len(sys.argv) == 3:
+    if os.path.exists(sys.argv[1]):
+        init_vars['input_filename'] = sys.argv[1]
+    else:
+        sys.exit("ERROR: The file to be converted\n\n\t %s \n\ndoes not exist!" % sys.argv[1] + \
+                "\nAre you using the full path?")
+    if os.path.exists("./"+sys.argv[2]) or os.path.exists(sys.argv[2]):
+        parameter = sys.argv[2]
+    else:
+        sys.exit("ERROR: The parameter file\n\n\t %s \n\ndoes not exist!" % sys.argv[2] + \
+                "\nAre you using the full path?")
+    with open(parameter) as fn:
+        lines = fn.readlines()
+        for line in lines:
+            words = line.split()
+            if len(words) == 0 or words[0] == '#' or words[0][0] == '#':
+                continue
+            elif words[0] == "input_filetype":
+                init_vars['input_filetype'] = words[2]
+            elif words[0] == "output_directory":
+                init_vars['output_directory'] = words[2]
+            elif words[0] == "output_filename":
+                num = 0
+                if os.path.exists( init_vars['output_directory']+'/'+words[2]+"%02d.vtk"%num ):
+                    dirs = os.listdir( init_vars['output_directory'] )
+                    for dir in dirs:                         
+                        if dir[:len(words[2])] == words[2]:
+                            num += 1                                                
+                init_vars['output_filename'] = words[2] + "%02d" % num
+            elif words[0] == "variables":
+                init_vars['variables'] = words[2:]
+            elif words[0] == "ibegin":
+                init_vars['ibegin'] = words[2]
+            elif words[0] == "iend":
+                init_vars['iend'] = words[2]
+            elif words[0] == "jbegin":
+                init_vars['jbegin'] = words[2]
+            elif words[0] == "jend":
+                init_vars['jend'] = words[2]
+            elif words[0] == "kbegin":
+                init_vars['kbegin'] = words[2]
+            elif words[0] == "kend":
+                init_vars['kend'] = words[2]
+            elif words[0] == "time_begin":
+                init_vars['time_begin'] = words[2]
+            elif words[0] == "time_step":
+                init_vars['time_step'] = words[2]
+            elif words[0] == "bathymetry":
+                init_vars['bathymetry'] = words[2]
+
+    if init_vars['variables'] == 'None':
+        sys.exit("\nERROR: The parameter file\n\t '%s' \nmust have a line" % parameter + \
+                "initializing the keywords 'variables' to a space separated list"+ \
+                " of the variables to be converted")
+    if init_vars['vector'] == True:
+        pass
+
+c2v = convert2vtk( init_vars )
+c2v.convert()
+

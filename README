@@ -1,0 +1,56 @@
+Author: Nathan Crock
+        mathnathan@gmail.com
+        http://www.mathnathan.com
+
+
+Date:    04/09/12    14:43
+
+
+----------- Convert to VTK ------------
+
+Introduction
+
+    Convert model output to vtk file format for easy visualization in Visit!
+    This project is being designed as an extensible utility, if someone has a
+    need to convert a data type specific to a model not yet supported they can
+    simply write their own conversion module. The idea is to have a simple
+    command line tool for researchers to easily and painlessly get their model
+    output into the Visit visualization suite.
+
+
+OS SUPPORT: Only tested on Linux so far
+
+            Ubuntu 10.04, 10.10
+
+FILES:
+        c2v - The front end. Parses parameter files and formats data
+        convert2vtk.py - The class, calls appropriate modules for conversion
+        libs |
+             | bin - NetCDF python interface
+             | lib64 - The netcdf4 and visit_writer libraries
+             | netCDF4-0.9.7 - NetCDF version compiled in source. Try not to
+                               make it an external dependency
+        modules |
+                | dmitry_module.py - A module for converting data specific to
+                |                    Dmitry Dukhovskoy
+                | hycom_binary_module.py - A prototype for a hycom binary converter
+                |                          Much more work needs to be done, such as
+                |                          interpolation and binary slicing.
+                | hycom_z_module.py - Fully functional hycom z level grid converter.
+                                      This will convert hycom z level files to vtk 
+        parameter_files |
+                        | parameter.txt - An example conversion parameter file.
+        scripts |
+                | convert_arctic.sh - An example of using a script to convert
+                                      multiple files.
+        
+
+DEPENDENCIES:   netCDF4-0.9.7 (packaged internally)
+
+COMPILATION INSTRUCTIONS: 
+
+    COMPLETE THIS NEXT
+
+======================================================================================
+
+    "Believing in the way, makes the way!"
