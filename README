@@ -20,11 +20,13 @@ Introduction
 
 OS SUPPORT: Only tested on Linux so far
 
-            Ubuntu 10.04, 10.10
+            Ubuntu 10.04, 10.10, 11.04, 11.10, 12.04
 
 FILES:
         c2v - The front end. Parses parameter files and formats data
         convert2vtk.py - The class, calls appropriate modules for conversion
+        movie_script.py - A sample movie script, for those who want to generate
+                          animations with their data. See further instructions online.
         libs |
              | bin - NetCDF python interface
              | lib64 - The netcdf4 and visit_writer libraries
@@ -37,7 +39,10 @@ FILES:
                 |                          Much more work needs to be done, such as
                 |                          interpolation and binary slicing.
                 | hycom_z_module.py - Fully functional hycom z level grid converter.
-                                      This will convert hycom z level files to vtk 
+                |                     This will convert hycom z level files to vtk 
+                | ncom_module.py - Converts ncom model output to VTK
+                | roms_module.py - Converts roms model output to VTK
+                
         parameter_files |
                         | parameter.txt - An example conversion parameter file.
         scripts |
@@ -45,11 +50,16 @@ FILES:
                                       multiple files.
         
 
-DEPENDENCIES:   netCDF4-0.9.7 (packaged internally)
+DEPENDENCIES:   netCDF4-0.9.7 (packaged internally) // May need to recompile for your 
+                architecture
 
 COMPILATION INSTRUCTIONS: 
 
-    COMPLETE THIS NEXT
+    It's a script, so nothing for the project needs to be compiled. One may need to 
+    compile the dependencies. the NetCDF4-0.9.7 library and the visit_writer.so. The
+    visit writer was taken from the libraries section of the visit source code. If
+    you have a local version installed on your computer, just copy that file into the 
+    libs directory
 
 ======================================================================================
 
