@@ -1,0 +1,36 @@
+# Specify the filetype with 'input_filetype' - hycom_z, hycom_binary, roms, ncom, etc...
+input_filetype = ncom
+
+# Specify where you would like the output files to be saved (should use complete path)
+output_directory = converted_ncom_files2
+
+# You can change the name of the converted file. Not specifying
+# output_filename will append a .vtk to the end of the current filename
+output_filename = ncom_output
+
+# List the variables in the file you wish to convert, separated by spaces
+# Currently hycom z level files only have one variable per netcdf file.
+variables = u v t s
+
+# One has the option to chose only a small time slice from the file (if there
+# are more than one) Leaving these lines blank will use the entire timeline
+timeBegin = 0
+timeStep = 1
+
+# One can also select a subregion of the file for faster more efficient
+# visualization. Commenting out these lines, or leaving them blank will 
+# use the entire regions. For example if you comment out jbegin = 200 it
+# will automatically be set to 0. If you comment our jend, it will be set to
+# the domain size.
+ibegin = 100
+jend = 400
+jbegin = 100
+iend = 400
+kbegin = 30
+kend = 40
+
+# Specify a bathymetry file if you need topography in your visualization
+#bathymetry = /panfs/storage.local/coaps/home/ndc08/code/converter/hycom_data/gulf_of_mexico/depth_GOMl0.04_72.nc
+# Set the gridspace flag to True if you would like x and y to be discretized by gridspace as opposed to the default longitude and latitude (this is usefule for dealing with things like polar regions)
+#gridspace = True
+#subsample = 0

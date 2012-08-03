@@ -2533,6 +2533,10 @@ details."""
         # missing_value/_Fill_Value.
         # ignore for compound and vlen datatypes.
         if self.maskandscale and self._isprimitive:
+<<<<<<< HEAD
+            print "IS MASK OR IS PRIMITIVE"
+=======
+>>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
             data = self._toma(data)
             # if variable has scale_factor and add_offset attributes, rescale.
             if hasattr(self, 'scale_factor') and hasattr(self, 'add_offset') and\
