@@ -71,7 +71,7 @@ class convert2vtk():
         self.datau = None
         self.datav = None
 =======
-        self.time_step = init_vars['time_step']
+        self.time_end = init_vars['time_end']
         self.vector = init_vars['vector']
         self.bathymetry = init_vars['bathymetry']
         if self.vector == "True":

@@ -113,15 +113,15 @@ def convert( core ):
 
 
     # Set up the time range
-    if core.time_begin == 'None' and core.time_step == 'None':
+    if core.time_begin == 'None' and core.time_end == 'None':
         beg_time = 0
         end_time = len(dimVars['MT'])
         time = end_time-beg_time
     elif core.time_begin == 'None':
         beg_time = 0
-        end_time = core.time_step
+        end_time = core.time_end
         time = end_time-beg_time
-    elif core.time_step == 'None':
+    elif core.time_end == 'None':
         beg_time = core.time_begin
         end_time = len(dimVars['MT'])
         time = end_time-beg_time

@@ -21,7 +21,7 @@ init_vars['time_begin'] = 0
 <<<<<<< HEAD
 init_vars['time_end'] = 1
 =======
-init_vars['time_step'] = 1
+init_vars['time_end'] = 1
 >>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 init_vars['vector'] = False
 init_vars['filename_u'] = 'None'
@@ -112,8 +112,8 @@ elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
                     sys.exit("\nERROR: the subsample must be a positive integer greater than 1")
 
 =======
-            elif words[0] == "time_step":
-                init_vars['time_step'] = words[2]
+            elif words[0] == "time_end":
+                init_vars['time_end'] = words[2]
             elif words[0] == "bathymetry":
                 init_vars['bathymetry'] = words[2]
 >>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
@@ -198,8 +198,8 @@ elif len(sys.argv) == 3:
                 else:
                     sys.exit("\nERROR: the subsample must be a positive integer greater than 1")
 =======
-            elif words[0] == "time_step":
-                init_vars['time_step'] = words[2]
+            elif words[0] == "time_end":
+                init_vars['time_end'] = words[2]
             elif words[0] == "bathymetry":
                 init_vars['bathymetry'] = words[2]
 >>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
