@@ -18,20 +18,14 @@ init_vars['jend'] = 'None'
 init_vars['kbegin'] = 'None'
 init_vars['kend'] = 'None'
 init_vars['time_begin'] = 0
-<<<<<<< HEAD
 init_vars['time_end'] = 1
-=======
 init_vars['time_end'] = 1
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 init_vars['vector'] = False
 init_vars['filename_u'] = 'None'
 init_vars['filename_v'] = 'None'
 init_vars['bathymetry'] = 'None'
-<<<<<<< HEAD
 init_vars['gridspace'] = False
 init_vars['subsample'] = 'None'
-=======
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
 # Here we parse through the parameter file and command line arguments to extract the input information
 if len(sys.argv) < 3 or (len(sys.argv) > 3 and sys.argv[1] != "--vector" and sys.argv[1] != "-v"):
@@ -92,7 +86,6 @@ elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
                 init_vars['kend'] = words[2]
             elif words[0] == "time_begin":
                 init_vars['time_begin'] = words[2]
-<<<<<<< HEAD
             elif words[0] == "time_end":
                 init_vars['time_end'] = words[2]
             elif words[0] == "bathymetry":
@@ -110,21 +103,14 @@ elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
                     init_vars['subsample'] = num
                 else:
                     sys.exit("\nERROR: the subsample must be a positive integer greater than 1")
-
-=======
             elif words[0] == "time_end":
                 init_vars['time_end'] = words[2]
             elif words[0] == "bathymetry":
                 init_vars['bathymetry'] = words[2]
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
     if init_vars['variables'] == 'None':
         sys.exit("\nERROR: The parameter file\n\t '%s' \nmust have a line" % parameter + \
                 "initializing the keywords 'variables' to a space separated list"+ \
                 " of the variables to be converted")
-<<<<<<< HEAD
-
-=======
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 elif len(sys.argv) == 3:
     if os.path.exists(sys.argv[1]):
         init_vars['input_filename'] = sys.argv[1]
@@ -141,13 +127,10 @@ elif len(sys.argv) == 3:
         for line in lines:
             words = line.split()
             if len(words) == 0 or words[0] == '#' or words[0][0] == '#':
-<<<<<<< HEAD
                 continue 
             elif words[0] == "input_filetype": 
-=======
                 continue
             elif words[0] == "input_filetype":
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
                 init_vars['input_filetype'] = words[2]
             elif words[0] == "output_directory":
                 init_vars['output_directory'] = words[2]
@@ -156,11 +139,8 @@ elif len(sys.argv) == 3:
                 if os.path.exists( init_vars['output_directory']+'/'+words[2]+"%02d.vtk"%num ):
                     dirs = os.listdir( init_vars['output_directory'] )
                     for dir in dirs:                         
-<<<<<<< HEAD
                         if dir[:len(words[2])] == words[2] and dir[-6:-4].isdigit():
-=======
                         if dir[:len(words[2])] == words[2]:
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
                             num += 1                                                
                 init_vars['output_filename'] = words[2] + "%02d" % num
             elif words[0] == "variables":
@@ -179,7 +159,6 @@ elif len(sys.argv) == 3:
                 init_vars['kend'] = words[2]
             elif words[0] == "time_begin":
                 init_vars['time_begin'] = words[2]
-<<<<<<< HEAD
             elif words[0] == "time_end":
                 init_vars['time_end'] = words[2]
             elif words[0] == "bathymetry":
@@ -197,12 +176,10 @@ elif len(sys.argv) == 3:
                     init_vars['subsample'] = num
                 else:
                     sys.exit("\nERROR: the subsample must be a positive integer greater than 1")
-=======
             elif words[0] == "time_end":
                 init_vars['time_end'] = words[2]
             elif words[0] == "bathymetry":
                 init_vars['bathymetry'] = words[2]
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
     if init_vars['variables'] == 'None':
         sys.exit("\nERROR: The parameter file\n\t '%s' \nmust have a line" % parameter + \

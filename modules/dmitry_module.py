@@ -19,13 +19,10 @@ def load_mesh( core, filename ):
 def convert( core ):
     print "Converting dmitry's files to vtk..."
 
-<<<<<<< HEAD
     meshData = "/panfs/storage.local/coaps/home/ddmitry/fvcom/fvcom/models/ike/outputT03/ike_0040.nc"
     load_mesh( core, meshData )
-=======
     meshData = "/panfs/storage.local/coaps/home/ndc08/code/hycom_data/ike_0024.nc"
     load_mesh( core, meshData)
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
     meshVars = core.mesh.variables
     dataVars = core.data.variables
 
@@ -57,12 +54,9 @@ def convert( core ):
     # Connectivity
     parts = meshVars['nv'][:].tolist()
     conn = []
-<<<<<<< HEAD
     #print "parts[0][0] = ", parts[0][0]
     #print "parts[1][0] = ", parts[0][0]
     #print "parts[2][0] = ", parts[0][0]
-=======
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
     for i in xrange( numberOfElements ):
         conn.append( ("triangle", parts[0][i]-1, parts[1][i]-1, parts[2][i]-1 ) )
 
@@ -71,7 +65,6 @@ def convert( core ):
         # Data arrays
         u_wind = dataVars['uwind_stress'][:][time].tolist()
         v_wind = dataVars['vwind_stress'][:][time].tolist()
-<<<<<<< HEAD
         #print "u_wind[0] = ", u_wind[0] 
         #print "v_wind[0] = ", v_wind[0] 
         wind = []
@@ -82,13 +75,11 @@ def convert( core ):
                 wind.append( 0.0 )
             except:
                 print "SHIT GUYS, i = ", i
-=======
         wind = []
         for i in xrange( numberOfElements ):
             wind.append( u_wind[i] )
             wind.append( v_wind[i] )
             wind.append( 0.0 )
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         # Create the variables such as vectors (velocity) and scalars (temperature/salinity)
         vars = [("wind", 3, 0, wind), ("u_wind", 1, 0, u_wind ), ("v_wind", 1, 0, v_wind)]

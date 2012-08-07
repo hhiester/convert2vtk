@@ -10,15 +10,12 @@ class convert2vtk():
     """ Read in a model's output data file
 
             Currently supports:
-<<<<<<< HEAD
                 HYCOM Binary (Incomplete)
                 HYCOM Z Level
                 NCOM
-=======
                 HYCOM Binary (Not Implemented Yet)
                 HYCOM Z Level
                 NCOM (Not Implemented Yet)
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
                 ROMS (Not Implemented Yet)
 
         and convert it into a vtk file for easy visualization in VisIt\n """
@@ -30,23 +27,16 @@ class convert2vtk():
     import netCDF4 as nc
     import string as str
     import struct
-<<<<<<< HEAD
     import resource
 
     # Set stack memory limit to maximum 
     resource.setrlimit( resource.RLIMIT_STACK, (-1,-1) )
-=======
-
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
     def __init__( self, init_vars ):
         """ Initialization Routine - Create the output folder to hold the vtk files 
         init_vars - dictionary of initialization variables"""
-<<<<<<< HEAD
         #print "In the __init__ routine"
-=======
         print "In the __init__ routine"
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         self.filetype = init_vars['input_filetype']
         self.input_filename = init_vars['input_filename']
@@ -62,7 +52,6 @@ class convert2vtk():
         self.kbegin = init_vars['kbegin']
         self.kend = init_vars['kend']
         self.time_begin = init_vars['time_begin']
-<<<<<<< HEAD
         self.time_end = init_vars['time_end']
         self.vector = init_vars['vector']
         self.bathymetry = init_vars['bathymetry']
@@ -70,7 +59,6 @@ class convert2vtk():
         self.subsample_num = init_vars['subsample']
         self.datau = None
         self.datav = None
-=======
         self.time_end = init_vars['time_end']
         self.vector = init_vars['vector']
         self.bathymetry = init_vars['bathymetry']
@@ -82,7 +70,6 @@ class convert2vtk():
             self.vector == False
             self.data = None
             self.mesh = None
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         if not os.path.exists( self.output_directory ):
             os.makedirs( self.output_directory )
@@ -93,26 +80,20 @@ class convert2vtk():
 
     def __del__( self ):
         """ Destructor - Nothing needed yet """
-<<<<<<< HEAD
         #print "In the __del__ routine"
-=======
         print "In the __del__ routine"
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         return
 
 
     def __load( self ):
         """ Load the initialization variables into memory for conversion. """ 
-<<<<<<< HEAD
         #print "In the load routine"
 
     # ---------------------------------- Hycom Z level files ------------------------------
-=======
         print "In the load routine"
 
 # ---------------------------------- Hycom Z level files ------------------------------
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         if self.filetype == "hycom_z":
             if self.vector == True:
@@ -145,10 +126,7 @@ class convert2vtk():
                     self.output_filename = self.output_directory+self.output_filename
                 else:
                     self.output_filename = self.output_directory+"/"+self.output_filename
-<<<<<<< HEAD
-=======
                 print "The files read in were ", self.filetype, "files."
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
             else:
                 try:
                     self.data = self.nc.Dataset( self.input_filename, 'r' )
@@ -169,15 +147,12 @@ class convert2vtk():
                     self.output_filename = self.output_directory+self.output_filename
                 else:
                     self.output_filename = self.output_directory+"/"+self.output_filename
-<<<<<<< HEAD
 
     # ---------------------------------- Hycom files --------------------------------------
-=======
                 print "The file read in \n\n", self.input_filename.split("/")[-1], \
                         "is a", self.filetype, "file."
 
 # ---------------------------------- Hycom files --------------------------------------
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         elif self.input_filename[-2:] == ".a" and self.filetype == "hycom_binary":
             # Only store the filename in memory for now
@@ -188,7 +163,6 @@ class convert2vtk():
                 self.output_filename = self.output_directory+"/"+ \
                                     self.input_filename.split("/")[-1][:-2]
 
-<<<<<<< HEAD
 
     # ---------------------------------- Ncom files --------------------------------------
 
@@ -256,12 +230,10 @@ class convert2vtk():
 
 
     # ---------------------------------- Unrecognized files -------------------------------
-=======
             print "The file read in \n\n", self.input_filename.split("/")[-1], \
                     "is a", self.filetype, "file."
 
 # ---------------------------------- Unrecognized files -------------------------------
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         else:
             sys.exit( "\nERROR: The filetype to be converted \n\n%s\n\n" % self.input_filename+ \
@@ -271,26 +243,20 @@ class convert2vtk():
 
     def convert( self ):
         """ Convert the input file(s) into vtk file(s) """
-<<<<<<< HEAD
         #print "In the convert routine"
-=======
         print "In the convert routine"
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
         if self.filetype == "hycom_binary":
             self.__convertHycomB()
         elif self.filetype == "hycom_z":
             self.__convertHycomZ()
         elif self.filetype == "ncom":
-<<<<<<< HEAD
             self.__convertNcom()
         elif self.filetype == "roms":
             self.__convertRoms()
-=======
             pass
         elif self.filetype == "roms":
             pass
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
         elif self.filetype == "dmitry":
             self.__convertDmitry()
 
@@ -308,7 +274,6 @@ class convert2vtk():
     def __convertDmitry( self ):
         import dmitry_module as dmitry
         dmitry.convert( self )
-<<<<<<< HEAD
 
 
     def __convertNcom( self ):
@@ -476,5 +441,3 @@ class convert2vtk():
             new_data = self.np.take( data, indices, 0 )
 
         return new_data
-=======
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae

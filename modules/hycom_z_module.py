@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # core is the base class convert2vtk. It provides access to all the libraries
 # and functions included in the class
 def convert( core ):
@@ -6,7 +5,6 @@ def convert( core ):
     if core.vector == True:
         print "\nConverting "+core.input_filename_u+" and "+core.input_filename_v+" \
                 to "+core.output_filename+".vtk..."
-=======
 
 
 def convert( core ):
@@ -19,15 +17,11 @@ def convert( core ):
     print "kend = ", core.kend
 
     if core.vector_flag == True:
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
         ncVarsU = core.datau.variables
         ncVarsV = core.datav.variables
         dimVars = core.datau.dimensions
     else:
-<<<<<<< HEAD
         print "\nConverting "+core.input_filename+" to "+core.output_filename+".vtk..."
-=======
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
         ncVars = core.data.variables
         dimVars = core.data.dimensions
     args = core.variables
@@ -35,33 +29,26 @@ def convert( core ):
         lenX = len(dimVars['X'])
     elif 'Longitude' in dimVars:
         lenX = len(dimVars['Longitude'])
-<<<<<<< HEAD
     elif 'x' in dimVars:
         lenX = len(dimVars['x'])
     else:
         core.sys.exit("ERROR: X-dimension/Longitude variable name not recognized. Tried 'Longitude' and 'X'")
-=======
     else:
         core.sys.exit("ERROR: X-dimension/Longitude variable name not recognized")
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
     if 'Y' in dimVars:
         lenY = len(dimVars['Y'])
     elif 'Latitude' in dimVars:
         lenY = len(dimVars['Latitude'])
-<<<<<<< HEAD
     elif 'y' in dimVars:
         lenY = len(dimVars['y'])
     else:
         core.sys.exit("ERROR: Y-dimension/Latitude variable name not recognized. Tried 'Latitude', and 'Y'")
-=======
     else:
         core.sys.exit("ERROR: Y-dimension/Latitude variable name not recognized")
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
     if 'Depth' in dimVars:
         lenZ = len(dimVars['Depth'])
     elif 'Z' in dimVars:
         lenZ = len(dimVars['Z'])
-<<<<<<< HEAD
     elif 'z' in dimVars:
         lenZ = len(dimVars['z'])
     else:
@@ -76,7 +63,6 @@ def convert( core ):
     # Apply the subsetting
     ibeg, iend, nX, jbeg, jend, nY, kbeg, kend, nZ, tbeg, tend, time = \
     core.subset( lenX, lenY, lenZ, lenT )
-=======
     else:
         core.sys.exit("ERROR: Z-dimension/Depth variable name not recognized")
 
@@ -186,12 +172,10 @@ def convert( core ):
     print "nY = ", nY
     print "nZ = ", nZ
                 
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
 
     # Make the variables before the grid. This saves the user time if their
     # input values are bad
     vars = []
-<<<<<<< HEAD
     # Check to see if the vector flag is set to True
     if core.vector == True:
         for t in xrange(tbeg,tend):
@@ -200,7 +184,6 @@ def convert( core ):
                 udata = ncVarsU['u'][t,kbeg:kend,jbeg:jend,ibeg:iend]
             else:
                 core.sys.exit( "\nERROR: The variable \'u\' is not in the file '"+core.input_filename_u+"'" )
-=======
     if core.vector_flag == True:
         for t in xrange(beg_time,end_time):
             print "what"
@@ -209,12 +192,10 @@ def convert( core ):
             else:
                 core.sys.exit( "ERROR: The variable \'u\' is not in the file '"+core.input_filename_u+"'" )
             print "is"
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
             if isinstance(udata, core.np.ma.MaskedArray):
                 # Use the mask to change all masked elements to NaNs
                 udata = udata.filled(core.np.nan)
             if not isinstance( udata, core.np.ndarray ):
-<<<<<<< HEAD
                 core.sys.exit( "\nERROR: UData is not of type numpy.ndarray" )
             if 'v' in ncVarsV:
                 print "\tExtracting V vector data at time %d..." % t
@@ -237,7 +218,6 @@ def convert( core ):
             vdata_slice = vdata.flatten().tolist()  
             data = []
             print "\tPacking U and V vector data together..."
-=======
                 core.sys.exit( "ERROR: UData is not of type numpy.ndarray" )
             print "taking"
             if 'v' in ncVarsV:
@@ -257,25 +237,20 @@ def convert( core ):
             vdata_slice = vdata.flatten().tolist()  
             data = []
             print " combining slices"
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
             for i in xrange( len(udata_slice) ):
                 data.append( udata_slice[i] )
                 data.append( vdata_slice[i] )
                 data.append( 0.0 )
-<<<<<<< HEAD
             vars = [(args[0], 3, 1, data), \
                     ("u_"+args[0], 1, 1, udata_slice ), \
                     ("v_"+args[0], 1, 1, vdata_slice)]
-=======
             vars = [(args[0], 3, 0, data), \
                     ("u_"+args[0], 1, 0, udata_slice ), \
                     ("v_"+args[0], 1, 0, vdata_slice)]
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
         ncVars = ncVarsU
 
     else:
         for arg in args:
-<<<<<<< HEAD
             for t in xrange(tbeg,tend):
                 print "\tPacking %s at time %d..." % (arg,t)
                 if arg in ncVars:
@@ -283,19 +258,16 @@ def convert( core ):
                     data = ncVars[arg][t,kbeg:kend,jbeg:jend,ibeg:iend]
                 else:
                     core.sys.exit("\nERROR: The variable '"+arg+ \
-=======
             for t in xrange(beg_time,end_time):
                 if arg in ncVars:
                     data = ncVars[arg][t,kbeg:kend,jbeg:jend,ibeg:iend]
                 else:
                     core.sys.exit("ERROR: The variable '"+arg+ \
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
                         "' is not in the file '"+core.input_filename+"'")
                 if isinstance(data, core.np.ma.MaskedArray):
                     # Use the mask to change all masked elements to NaNs
                     data = data.filled( core.np.nan )
                 if not isinstance( data, core.np.ndarray ):
-<<<<<<< HEAD
                     core.sys.exit( "\nERROR: Data is not of type numpy.ndarray" )
                 # Subsample the data immediately to speed up future computations
                 if core.subsample_num != 'None':
@@ -565,7 +537,6 @@ def convert( core ):
     if BATH_FLAG:
         bathDims = [nX,nY,4]
         core.vw.WriteCurvilinearMesh( bathName, True, bathDims, bathPts, bathVars )
-=======
                     core.sys.exit( "ERROR: Data is not of type numpy.ndarray" )
                 print "data.shape = ", data.shape
                 print "data.size = ", data.size
@@ -690,4 +661,3 @@ def convert( core ):
     core.vw.WriteUnstructuredMesh( name, True, pts, conn, vars )
     print "Conversion Complete!"
     print "Output File = ", name
->>>>>>> eb0cbca65dcd113bc12fd557fb46327e4756b1ae
