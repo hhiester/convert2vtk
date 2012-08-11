@@ -140,9 +140,7 @@ elif len(sys.argv) == 3:
                     dirs = os.listdir( init_vars['output_directory'] )
                     for dir in dirs:                         
                         if dir[:len(words[2])] == words[2] and dir[-6:-4].isdigit():
-                            num += 1
-                        if dir[:len(words[2])] == words[2]:
-                            num += 1                                                
+                            num += 1                                            
                 init_vars['output_filename'] = words[2] + "%02d" % num
             elif words[0] == "variables":
                 init_vars['variables'] = words[2:]
