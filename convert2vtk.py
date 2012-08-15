@@ -1,11 +1,3 @@
-import sys
-import os
-
-# Path to libs
-sys.path.append("/panfs/storage.local/coaps/home/ndc08/code/converter/libs/lib64")
-# Path to modules
-sys.path.append("/panfs/storage.local/coaps/home/ndc08/code/converter/modules")
-
 class convert2vtk():
     """ Read in a model's output data file
 
@@ -21,6 +13,8 @@ class convert2vtk():
         and convert it into a vtk file for easy visualization in VisIt\n """
     
     import sys
+    # Path to libs
+    sys.path.append("/ebs_09d83969/convert2vtk/libs/lib64")
     import os
     import numpy as np
     import visit_writer as vw
@@ -262,27 +256,27 @@ class convert2vtk():
 
 
     def __convertHycomB( self ):
-        import hycom_binary_module as hycom_binary
+        import modules.hycom_binary_module as hycom_binary
         hycom_binary.convert( self )
 
 
     def __convertHycomZ( self ):
-        import hycom_z_module as hycom_z
+        import modules.hycom_z_module as hycom_z
         hycom_z.convert( self )
 
 
     def __convertDmitry( self ):
-        import dmitry_module as dmitry
+        import modules.dmitry_module as dmitry
         dmitry.convert( self )
 
 
     def __convertNcom( self ):
-        import ncom_module as ncom
+        import modules.ncom_module as ncom
         ncom.convert( self )
 
 
     def __convertRoms( self ):
-        import roms_module as roms
+        import modules.roms_module as roms
         roms.convert( self )
 
     def subset( self, lenX, lenY, lenZ, lenT ):
@@ -309,13 +303,13 @@ class convert2vtk():
             ibeg = int(self.ibegin)
             iend = int(self.iend)+1
             nX = 1
+        elif self.iend > self.ibegin:
+            ibeg = int(self.ibegin)
+            iend = int(self.iend)+1
+            nX = iend-ibeg
         else:
-            if self.iend > self.ibegin:
-                ibeg = int(self.ibegin)
-                iend = int(self.iend)+1
-                nX = iend-ibeg
-            else:
-                self.sys.exit("Ending i slice %d must be greater than begining i slice %d" % (self.iend,self.ibegin))
+            self.sys.exit("Ending i slice %d must be greater than begining \
+            i slice %d" % (int(self.iend),int(self.ibegin)))
 
 
         # Set up the y slicing range
@@ -340,10 +334,13 @@ class convert2vtk():
             jbeg = int(self.jbegin)
             jend = int(self.jend)+1
             nY = 1
-        else:
+        elif self.jend > self.jbegin:
             jbeg = int(self.jbegin)
             jend = int(self.jend)+1
             nY = jend-jbeg
+        else:
+            self.sys.exit("Ending j slice %d must be greater than begining \
+            j slice %d" % (int(self.jend),int(self.jbegin)))
 
 
         # Set up the z slicing range
@@ -371,10 +368,13 @@ class convert2vtk():
             kbeg = int(self.kbegin)
             kend = int(self.kend)+1
             nZ = 1
-        else:
+        elif self.kend > self.kbegin:
             kbeg = int(self.kbegin)
             kend = int(self.kend)+1
             nZ = kend-kbeg
+        else:
+            self.sys.exit("Ending k slice %d must be greater than begining \
+            k slice %d" % (int(self.kend),int(self.kbegin)))
 
         # Set up the time range
         if self.time_begin == 'None' and self.time_end == 'None':
@@ -389,10 +389,14 @@ class convert2vtk():
             tbeg = self.time_begin
             tend = lenT
             time = tend-tbeg
-        else:
+        elif self.time_end > self.time_begin:
             tbeg = self.time_begin
             tend = lenT
             time = tend-tbeg
+        else:
+            self.sys.exit("Ending time slice %d must be greater than begining \
+            k slice %d" % (int(self.time_end),int(self.time_begin)))
+
 
         # The number of elements in each dimension will change if it is subsampled
         if self.subsample_num != 'None':

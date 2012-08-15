@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-from convert2vtk import *
+import convert2vtk as c2v
 import sys
 import os
 
@@ -30,10 +30,7 @@ init_vars['subsample'] = 'None'
 # Here we parse through the parameter file and command line arguments to extract the input information
 if len(sys.argv) < 3 or (len(sys.argv) > 3 and sys.argv[1] != "--vector" and sys.argv[1] != "-v"):
     sys.exit("\nMust pass a data file to be converted, and a parameter" + \
-            "file.\ne.g.\n\tc2v hycom_experiment6.nc experiment6.param\n"+ \
-            "\nOr if dealing with vectors, use the --vector or -v flag\n"+ \
-            "e.g.\n\tc2v --vector hycom_winds_u.nc hycom_winds_v.nc winds.param\n"+ \
-            "\tc2v -v hycom_winds_u.nc hycom_winds_v.nc winds.param" )
+            "file.\ne.g.\n\tc2v hycom_experiment6.nc experiment6.param\n" )
 
 elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
     if os.path.exists(sys.argv[2]):
@@ -58,11 +55,11 @@ elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
             words = line.split()
             if len(words) == 0:
                 continue
-            elif words[0] == "input_filetype":
+            elif words[0].lower() == "input_filetype":
                 init_vars['input_filetype'] = words[2]
-            elif words[0] == "output_directory":
+            elif words[0].lower() == "output_directory":
                 init_vars['output_directory'] = words[2]
-            elif words[0] == "output_filename":
+            elif words[0].lower() == "output_filename":
                 num = 0
                 if os.path.exists( init_vars['output_directory']+'/'+words[2]+"%02d.vtk"%num ):
                     dirs = os.listdir( init_vars['output_directory'] )
@@ -70,49 +67,49 @@ elif sys.argv[1] == "--vector" or sys.argv[1] == "-v":
                         if dir[:len(words[2])] == words[2]:
                             num += 1                                                
                 init_vars['output_filename'] = words[2] + "%02d" % num
-            elif words[0] == "variables":
+            elif words[0].lower() == "variables":
                 init_vars['variables'] = words[2:]
-            elif words[0] == "ibegin":
+            elif words[0].lower() == "ibegin":
                 init_vars['ibegin'] = words[2]
-            elif words[0] == "iend":
+            elif words[0].lower() == "iend":
                 init_vars['iend'] = words[2]
-            elif words[0] == "jbegin":
+            elif words[0].lower() == "jbegin":
                 init_vars['jbegin'] = words[2]
-            elif words[0] == "jend":
+            elif words[0].lower() == "jend":
                 init_vars['jend'] = words[2]
-            elif words[0] == "kbegin":
+            elif words[0].lower() == "kbegin":
                 init_vars['kbegin'] = words[2]
-            elif words[0] == "kend":
+            elif words[0].lower() == "kend":
                 init_vars['kend'] = words[2]
-            elif words[0] == "time_begin":
+            elif words[0].lower() == "time_begin":
                 init_vars['time_begin'] = words[2]
-            elif words[0] == "time_end":
+            elif words[0].lower() == "time_end":
                 init_vars['time_end'] = words[2]
-            elif words[0] == "bathymetry":
+            elif words[0].lower() == "bathymetry":
                 init_vars['bathymetry'] = words[2]
-            elif words[0] == "gridspace":
+            elif words[0].lower() == "gridspace":
                 if words[2].lower() == "true":  
                     init_vars['gridspace'] = True
                 elif words[2].lower() == "false":  
                     continue
                 else:
                     sys.exit("\nERROR: gridspace must be set to either 'True' or 'False'")
-            elif words[0] == "subsample":
+            elif words[0].lower() == "subsample":
                 num = int(words[2])
                 if num > 1:
                     init_vars['subsample'] = num
                 else:
                     sys.exit("\nERROR: the subsample must be a positive integer greater than 1")
-            elif words[0] == "time_end":
+            elif words[0].lower() == "time_end":
                 init_vars['time_end'] = words[2]
-            elif words[0] == "bathymetry":
+            elif words[0].lower() == "bathymetry":
                 init_vars['bathymetry'] = words[2]
     if init_vars['variables'] == 'None':
         sys.exit("\nERROR: The parameter file\n\t '%s' \nmust have a line" % parameter + \
                 "initializing the keywords 'variables' to a space separated list"+ \
                 " of the variables to be converted")
 elif len(sys.argv) == 3:
-    if os.path.exists(sys.argv[1]):
+    if os.path.exists("./"+sys.argv[1]) or os.path.exists(sys.argv[1]):
         init_vars['input_filename'] = sys.argv[1]
     else:
         sys.exit("ERROR: The file to be converted\n\n\t %s \n\ndoes not exist!" % sys.argv[1] + \
@@ -128,13 +125,11 @@ elif len(sys.argv) == 3:
             words = line.split()
             if len(words) == 0 or words[0] == '#' or words[0][0] == '#':
                 continue 
-            elif words[0] == "input_filetype": 
-                continue
-            elif words[0] == "input_filetype":
+            elif words[0].lower() == "input_filetype":
                 init_vars['input_filetype'] = words[2]
-            elif words[0] == "output_directory":
+            elif words[0].lower() == "output_directory":
                 init_vars['output_directory'] = words[2]
-            elif words[0] == "output_filename":
+            elif words[0].lower() == "output_filename":
                 num = 0
                 if os.path.exists( init_vars['output_directory']+'/'+words[2]+"%02d.vtk"%num ):
                     dirs = os.listdir( init_vars['output_directory'] )
@@ -142,42 +137,42 @@ elif len(sys.argv) == 3:
                         if dir[:len(words[2])] == words[2] and dir[-6:-4].isdigit():
                             num += 1                                            
                 init_vars['output_filename'] = words[2] + "%02d" % num
-            elif words[0] == "variables":
+            elif words[0].lower() == "variables":
                 init_vars['variables'] = words[2:]
-            elif words[0] == "ibegin":
+            elif words[0].lower() == "ibegin":
                 init_vars['ibegin'] = words[2]
-            elif words[0] == "iend":
+            elif words[0].lower() == "iend":
                 init_vars['iend'] = words[2]
-            elif words[0] == "jbegin":
+            elif words[0].lower() == "jbegin":
                 init_vars['jbegin'] = words[2]
-            elif words[0] == "jend":
+            elif words[0].lower() == "jend":
                 init_vars['jend'] = words[2]
-            elif words[0] == "kbegin":
+            elif words[0].lower() == "kbegin":
                 init_vars['kbegin'] = words[2]
-            elif words[0] == "kend":
+            elif words[0].lower() == "kend":
                 init_vars['kend'] = words[2]
-            elif words[0] == "time_begin":
+            elif words[0].lower() == "time_begin":
                 init_vars['time_begin'] = words[2]
-            elif words[0] == "time_end":
+            elif words[0].lower() == "time_end":
                 init_vars['time_end'] = words[2]
-            elif words[0] == "bathymetry":
+            elif words[0].lower() == "bathymetry":
                 init_vars['bathymetry'] = words[2]
-            elif words[0] == "gridspace":
+            elif words[0].lower() == "gridspace":
                 if words[2].lower() == "true":  
                     init_vars['gridspace'] = True
                 elif words[2].lower() == "false":  
                     continue
                 else:
                     sys.exit("\nERROR: gridspace must be set to either 'True' or 'False'")
-            elif words[0] == "subsample":
+            elif words[0].lower() == "subsample":
                 num = int(words[2])
                 if num > 1:
                     init_vars['subsample'] = num
                 else:
                     sys.exit("\nERROR: the subsample must be a positive integer greater than 1")
-            elif words[0] == "time_end":
+            elif words[0].lower() == "time_end":
                 init_vars['time_end'] = words[2]
-            elif words[0] == "bathymetry":
+            elif words[0].lower() == "bathymetry":
                 init_vars['bathymetry'] = words[2]
 
     if init_vars['variables'] == 'None':
@@ -187,6 +182,6 @@ elif len(sys.argv) == 3:
     if init_vars['vector'] == True:
         pass
 
-c2v = convert2vtk( init_vars )
-c2v.convert()
+converter = c2v( init_vars )
+converter.convert()
 

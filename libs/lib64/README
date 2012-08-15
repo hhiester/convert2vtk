@@ -1,3 +1,7 @@
 If you just downloaded this to your own computer, you may need to get the
 version of the visit_writer.so which VisIt created or came with on your local
 machine!
+
+Also, You must have the HDF5 libraries installed on your computer, and the
+netcdf-4 libraries. If c2v still complains about the netCDF module, just
+reinstall the libaries from the NetCDF4 source files in the previous directory.

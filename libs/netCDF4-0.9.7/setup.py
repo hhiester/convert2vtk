@@ -30,18 +30,18 @@ def check_ifnetcdf4(netcdf4_includedir):
             isnetcdf4 = True
     return isnetcdf4
 
-#HDF5_dir = os.environ.get('HDF5_DIR')
-#netCDF4_dir = os.environ.get('NETCDF4_DIR')
-#HDF5_includedir = os.environ.get('HDF5_INCDIR')
-#netCDF4_includedir = os.environ.get('NETCDF4_INCDIR')
-#HDF5_libdir = os.environ.get('HDF5_LIBDIR')
-#netCDF4_libdir = os.environ.get('NETCDF4_LIBDIR')
-HDF5_dir = "/opt/hpc/gnu/lib64"
-netCDF4_dir = "/opt/hpc/gnu/lib64"
-HDF5_includedir = "/opt/hpc/gnu/include"
-netCDF4_includedir = "/opt/hpc/gnu/include"
-HDF5_libdir = "/opt/hpc/gnu/lib64"
-netCDF4_libdir = "/opt/hpc/gnu/lib64"
+HDF5_dir = os.environ.get('HDF5_DIR')
+netCDF4_dir = os.environ.get('NETCDF4_DIR')
+HDF5_includedir = os.environ.get('HDF5_INCDIR')
+netCDF4_includedir = os.environ.get('NETCDF4_INCDIR')
+HDF5_libdir = os.environ.get('HDF5_LIBDIR')
+netCDF4_libdir = os.environ.get('NETCDF4_LIBDIR')
+#HDF5_dir = "/opt/hpc/gnu/lib64"
+#netCDF4_dir = "/opt/hpc/gnu/lib64"
+#HDF5_includedir = "/opt/hpc/gnu/include"
+#netCDF4_includedir = "/opt/hpc/gnu/include"
+#HDF5_libdir = "/opt/hpc/gnu/lib64"
+#netCDF4_libdir = "/opt/hpc/gnu/lib64"
 USE_NCCONFIG = os.environ.get('USE_NCCONFIG')
 
 # if USE_NCCONFIG set, and nc-config works, use it.
